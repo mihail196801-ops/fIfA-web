@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FC Mobile 3D</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Three.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <!-- GLTF Loader -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+  <!-- OrbitControls для тестирования (необязательно) -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+</head>
+<body>
+  <!-- Домашний экран -->
+  <div id="homeScreen" class="screen active">
+    <div class="home-header">
+      <div class="user-info">
+        <img src="https://via.placeholder.com/50" alt="Avatar" class="avatar">
+        <span class="username">RaguFC</span>
+      </div>
+      <div class="currency">
+        <span>2,892,487</span><img src="https://cdn2.futbin.com/https%3A%2F%2Fcdn.futbin.com%2Fdesign%2Fimg%2Fcoins_big.png?fm=png&ixlib=java-2.1.0&w=20&s=723885ca3b3ab1cf3cb11c53f9408968" alt="Coins" class="coin-icon">
+        <span>23,200</span><img src="https://www.futbin.com/design2/img/static/filters/foot-right.svg" alt="Points" class="point-icon">
+      </div>
+    </div>
+
+    <div class="main-menu">
+      <div class="menu-item" onclick="switchToGameplay()">
+        <img src="https://via.placeholder.com/100/00FF00/FFFFFF?text=PLAY" alt="Play">
+        <span>PLAY</span>
+      </div>
+      <div class="menu-item" onclick="showClub()">
+        <img src="https://via.placeholder.com/100/FF0000/FFFFFF?text=CLUB" alt="Club">
+        <span>CLUB</span>
+      </div>
+      <div class="menu-item" onclick="showMarket()">
+        <img src="https://via.placeholder.com/100/0000FF/FFFFFF?text=MARKET" alt="Market">
+        <span>MARKET</span>
+      </div>
+    </div>
+
+    <div class="bottom-nav">
+      <button class="nav-btn">QUESTS</button>
+      <button class="nav-btn">LEAGUES</button>
+      <button class="nav-btn">MARKET</button>
+      <button class="nav-btn">STORE</button>
+    </div>
+  </div>
+
+  <!-- Экран игры -->
+  <div id="gameplayScreen" class="screen">
+    <div id="hud">
+      <div class="scoreboard">
+        <div class="attempts">ATTEMPTS: <span id="attempts">0/99</span></div>
+        <div class="points">POINTS: <span id="points">0</span></div>
+      </div>
+      <div class="pause-btn">⏸️</div>
+    </div>
+
+    <div id="gameCanvasContainer">
+      <canvas id="gameCanvas"></canvas>
+    </div>
+
+    <!-- Управление -->
+    <div class="controls">
+      <div class="joystick" id="joystick">
+        <div class="stick"></div>
+      </div>
+      <div class="action-buttons">
+        <button class="btn" id="shootBtn">SHOOT</button>
+        <button class="btn" id="throughBtn">THROUGH</button>
+        <button class="btn" id="passBtn">PASS</button>
+        <button class="btn" id="sprintBtn">SPRINT & SKILL</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Экран клуба / карточек -->
+  <div id="clubScreen" class="screen">
+    <h2>ТВОЙ КЛУБ</h2>
+    <div class="player-cards">
+      <!-- Карточки будут добавляться динамически -->
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
