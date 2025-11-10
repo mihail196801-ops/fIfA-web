@@ -256,3 +256,133 @@ body {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+/* Экран квестов */
+#questsScreen {
+  background: #0a0a0a;
+  padding: 20px;
+  align-items: center;
+}
+
+.quests-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.quest-card {
+  width: 200px;
+  background: linear-gradient(135deg, #2c3e50, #1a252c);
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  position: relative;
+}
+
+.quest-name {
+  font-weight: bold;
+  font-size: 0.9em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.quest-reward {
+  font-weight: bold;
+  color: #ffcc00;
+  margin: 5px 0;
+}
+
+.complete-btn {
+  padding: 5px 10px;
+  font-size: 0.8em;
+  background: #ff5722;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.complete-btn:hover {
+  background: #e64a19;
+}
+
+.complete-btn:disabled {
+  background: #888;
+  cursor: not-allowed;
+}
+
+/* Экран рынка */
+#marketScreen {
+  background: #0a0a0a;
+  padding: 20px;
+  align-items: center;
+}
+
+.market-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.market-card {
+  width: 150px;
+  background: linear-gradient(135deg, #2c3e50, #1a252c);
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  position: relative;
+}
+
+.market-card img {
+  width: 100%;
+  border-radius: 5px;
+  margin-bottom: 5px;
+}
+
+.market-player-name {
+  font-weight: bold;
+  font-size: 0.9em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.market-player-rating {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: gold;
+  color: black;
+  font-weight: bold;
+  padding: 2px 5px;
+  border-radius: 5px;
+  font-size: 0.8em;
+}
+
+.market-player-price {
+  font-weight: bold;
+  color: #ffcc00;
+  margin: 5px 0;
+}
+
+.buy-btn {
+  padding: 5px 10px;
+  font-size: 0.8em;
+  background: #ff5722;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.buy-btn:hover {
+  background: #e64a19;
+}
