@@ -34,7 +34,7 @@ let quests = [
 
 // Список игроков с их характеристиками и позициями
 const playerData = [
-  // Команда 1 (домашняя) - красный цвет
+  // Команда 1 (домашняя)
   { id: 'ronaldo', name: 'Cristiano Ronaldo', rating: 97, position: 'ST', pac: 93, sho: 99, pas: 90, dri: 94, def: 75, phy: 99, team: 'Al Nassr', nationality: 'Portugal', model: 'models/player1.glb', price: 1800000, avatar: 'https://cdn3.futbin.com/content/fifa25/img/players/p184758707.png?fm=png&ixlib=java-2.1.0&verzion=2&w=100&s=ff8bfad1cf1fa5876da738ff69749703' },
   { id: 'messi', name: 'Lionel Messi', rating: 97, position: 'CAM', pac: 94, sho: 92, pas: 97, dri: 98, def: 80, phy: 87, team: 'Inter Miami', nationality: 'Argentina', model: 'models/player2.glb', price: 1600000, avatar: 'https://cdn3.futbin.com/content/fifa25/img/players/p134470099.png?fm=png&ixlib=java-2.1.0&verzion=1&w=100&s=a2af0c196cda265978c6316532b0e7c2' },
   { id: 'kane', name: 'Kane', rating: 98, position: 'CM', pac: 93, sho: 96, pas: 98, dri: 94, def: 92, phy: 93, team: 'Bayern Munich', nationality: 'England', model: 'models/player1.glb', price: 1900000, avatar: 'https://cdn3.futbin.com/content/fifa25/img/players/p201528718.png?fm=png&ixlib=java-2.1.0&verzion=1&w=100&s=3b3f15d18d4efd7d25aee4f0a6ffa9ce' },
@@ -47,7 +47,7 @@ const playerData = [
   { id: 'salah', name: 'Salah', rating: 97, position: 'RW', pac: 97, sho: 95, pas: 92, dri: 97, def: 60, phy: 85, team: 'Liverpool', nationality: 'Egypt', model: 'models/player1.glb', price: 700000, avatar: 'https://cdn3.futbin.com/content/fifa25/img/players/p184758707.png?fm=png&ixlib=java-2.1.0&verzion=2&w=100&s=ff8bfad1cf1fa5876da738ff69749703' },
   { id: 'pelé', name: 'Pelé', rating: 97, position: 'CAM', pac: 95, sho: 97, pas: 93, dri: 96, def: 61, phy: 82, team: 'Santos', nationality: 'Brazil', model: 'models/player2.glb', price: 2300000, avatar: 'https://cdn3.futbin.com/content/fifa25/img/players/p67345931.png?fm=png&ixlib=java-2.1.0&verzion=1&w=100&s=b0886397ad875c66853acc4946487382' },
 
-  // Команда 2 (Гостевая) - синий цвет
+  // Команда 2 (Гостевая)
   { id: 'mbappe', name: 'Mbappé', rating: 91, position: 'ST', pac: 97, sho: 90, pas: 80, dri: 92, def: 36, phy: 78, team: 'Real Madrid', nationality: 'France', model: 'models/player1.glb', price: 1300000, avatar: 'https://cdn3.futbin.com/content/fifa25/img/players/p151233738.png?fm=png&ixlib=java-2.1.0&verzion=1&w=100&s=f8c64d1a5945b0b88248bb5cfbdda9d2' },
   { id: 'dembele', name: 'Dembélé', rating: 97, position: 'RW', pac: 99, sho: 90, pas: 94, dri: 97, def: 55, phy: 75, team: 'Barcelona', nationality: 'France', model: 'models/player2.glb', price: 1300000, avatar: 'https://cdn3.futbin.com/content/fifa25/img/players/p151226387.png?fm=png&ixlib=java-2.1.0&verzion=2&w=100&s=34fecc4cd5fe05825cc8debee8c65735' },
   { id: 'cruyff', name: 'Cruyff', rating: 98, position: 'LM', pac: 96, sho: 92, pas: 98, dri: 99, def: 80, phy: 86, team: 'Ajax', nationality: 'Netherlands', model: 'models/player1.glb', price: 4200000, avatar: 'https://cdn3.futbin.com/content/fifa25/img/players/p84076125.png?fm=png&ixlib=java-2.1.0&verzion=1&w=100&s=842a17dcdcb173a4725f9bccdee1b5a5' },
@@ -63,7 +63,7 @@ const playerData = [
 
 // Стартовые позиции игроков (в метрах, относительно центра поля)
 const startingPositions = [
-  // Команда 1 (домашняя) - красный цвет
+  // Команда 1 (домашняя)
   { x: 0, z: -40 }, // GK
   { x: -10, z: -30 }, // LB
   { x: 10, z: -30 }, // RB
@@ -76,7 +76,7 @@ const startingPositions = [
   { x: 0, z: -5 }, // ST
   { x: 0, z: -15 }, // CAM
 
-  // Команда 2 (гостевая) - синий цвет
+  // Команда 2 (гостевая)
   { x: 0, z: 40 }, // GK
   { x: -10, z: 30 }, // LB
   { x: 10, z: 30 }, // RB
@@ -118,7 +118,10 @@ function init() {
 function init3D() {
   // Создаем сцену
   scene = new THREE.Scene();
-  scene.background = new THREE.Color(0x22aa22); // Зеленое поле
+
+  // Добавляем Skybox
+  const skyboxTexture = new THREE.TextureLoader().load('images/skybox/skybox.jpg');
+  scene.background = skyboxTexture;
 
   // Камера от трибун
   camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -211,34 +214,18 @@ function init3D() {
       player.position.set(pos.x, 0, pos.z);
       player.castShadow = true;
 
-      // Цветовая маркировка команд
-      if (i < 11) {
-        // Команда 1 - красная
-        player.traverse((child) => {
-          if (child.isMesh && child.material) {
-            if (Array.isArray(child.material)) {
-              child.material.forEach(mat => {
-                if (mat.color) mat.color.set(0xff0000);
-              });
-            } else {
-              if (child.material.color) child.material.color.set(0xff0000);
-            }
-          }
-        });
-      } else {
-        // Команда 2 - синяя
-        player.traverse((child) => {
-          if (child.isMesh && child.material) {
-            if (Array.isArray(child.material)) {
-              child.material.forEach(mat => {
-                if (mat.color) mat.color.set(0x0000ff);
-              });
-            } else {
-              if (child.material.color) child.material.color.set(0x0000ff);
-            }
-          }
-        });
-      }
+      // Убираем раскраску — оставляем оригинальные текстуры
+      // player.traverse((child) => {
+      //   if (child.isMesh && child.material) {
+      //     if (Array.isArray(child.material)) {
+      //       child.material.forEach(mat => {
+      //         if (mat.color) mat.color.set(0xff0000);
+      //       });
+      //     } else {
+      //       if (child.material.color) child.material.color.set(0xff0000);
+      //     }
+      //   }
+      // });
 
       scene.add(player);
       players.push(player);
@@ -341,7 +328,7 @@ function setupEventListeners() {
     orbitControls.dampingFactor = 0.25;
     orbitControls.enableZoom = true;
 
-    // Кнопки UI (создаем динамически)
+    // Кнопки UI (создаем динамически из изображений)
     createButtons();
 
     // Джойстик — убираем, так как управляем WASD
@@ -388,7 +375,7 @@ function createButtons() {
   buttonsContainer.style.gap = '10px';
 
   // Кнопка "Удар"
-  const shootBtn = createButton('SHOOT', 'https://cdn2.futbin.com/https%3A%2F%2Fcdn.futbin.com%2Fdesign%2Fimg%2Fcoins_big.png?fm=png&ixlib=java-2.1.0&w=20&s=723885ca3b3ab1cf3cb11c53f9408968');
+  const shootBtn = createImageButton('images/buttons/shoot.png', 'SHOOT');
   shootBtn.onclick = () => {
     if (!isPlaying) return;
     attempts++;
@@ -401,7 +388,7 @@ function createButtons() {
   };
 
   // Кнопка "Пас"
-  const passBtn = createButton('PASS', 'https://www.futbin.com/design2/img/static/filters/foot-right.svg');
+  const passBtn = createImageButton('images/buttons/pass.png', 'PASS');
   passBtn.onclick = () => {
     console.log("Пас!");
     if (mixer && actions['pass']) {
@@ -410,13 +397,13 @@ function createButtons() {
   };
 
   // Кнопка "Проникающий пас"
-  const throughBtn = createButton('THROUGH', 'https://www.futbin.com/design2/img/static/filters/foot-left.svg');
+  const throughBtn = createImageButton('images/buttons/through.png', 'THROUGH');
   throughBtn.onclick = () => {
     console.log("Проникающий пас!");
   };
 
   // Кнопка "Спринт и навык"
-  const sprintBtn = createButton('SPRINT & SKILL', 'https://assets.mixkit.co/sfx/preview/mixkit-quick-jump-arcade-game-effect-271.mp3');
+  const sprintBtn = createImageButton('images/buttons/sprint.png', 'SPRINT & SKILL');
   sprintBtn.onclick = () => {
     console.log("Спринт!");
     if (mixer && actions['sprint']) {
@@ -432,39 +419,26 @@ function createButtons() {
   document.body.appendChild(buttonsContainer);
 }
 
-function createButton(text, iconUrl) {
-  const btn = document.createElement('button');
-  btn.style.padding = '10px 20px';
-  btn.style.fontSize = '1em';
-  btn.style.backgroundColor = 'rgba(255,255,255,0.2)';
-  btn.style.border = '2px solid rgba(255,255,255,0.3)';
-  btn.style.borderRadius = '10px';
-  btn.style.cursor = 'pointer';
-  btn.style.transition = 'background 0.2s';
-  btn.style.display = 'flex';
-  btn.style.alignItems = 'center';
-  btn.style.gap = '5px';
-  btn.style.fontWeight = 'bold';
+function createImageButton(src, altText) {
+  const img = document.createElement('img');
+  img.src = src;
+  img.alt = altText;
+  img.style.width = '80px';
+  img.style.height = '80px';
+  img.style.cursor = 'pointer';
+  img.style.border = '2px solid rgba(255,255,255,0.3)';
+  img.style.borderRadius = '10px';
+  img.style.transition = 'transform 0.2s';
 
-  btn.onmouseover = () => {
-    btn.style.backgroundColor = 'rgba(255,255,255,0.3)';
+  img.onmouseover = () => {
+    img.style.transform = 'scale(1.1)';
   };
 
-  btn.onmouseout = () => {
-    btn.style.backgroundColor = 'rgba(255,255,255,0.2)';
+  img.onmouseout = () => {
+    img.style.transform = 'scale(1)';
   };
 
-  const icon = document.createElement('img');
-  icon.src = iconUrl;
-  icon.style.width = '20px';
-  icon.style.height = '20px';
-
-  const textNode = document.createTextNode(text);
-
-  btn.appendChild(icon);
-  btn.appendChild(textNode);
-
-  return btn;
+  return img;
 }
 
 // =================================
@@ -641,7 +615,7 @@ function loadPlayerCards() {
     // Золотой мяч для лучших игроков (например, Роналду или Месси)
     if (data.id === 'ronaldo' || data.id === 'messi') {
       const goldenBall = document.createElement('img');
-      goldenBall.src = 'images/effects/golden_ball.png';
+      goldenBall.src = 'images/cards/golden_ball.png';
       goldenBall.className = 'golden-ball';
       card.appendChild(goldenBall);
     }
