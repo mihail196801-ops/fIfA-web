@@ -138,7 +138,17 @@ function init3D() {
 
   loader.load('models/stadium.glb', (gltf) => {
     stadium = gltf.scene;
-    stadium.scale.set(1, 1, 1);
+
+    // Масштабируем стадион до реальных размеров
+    // Стандартное поле: 105м x 68м
+    const fieldWidth = 105;
+    const fieldHeight = 68;
+
+    // Предположим, что ваша модель стадиона имеет ширину ~10 единиц в Three.js
+    // Нам нужно масштабировать ее так, чтобы ширина была 105 метров
+    const scaleFactor = fieldWidth / 10; // Примерный масштаб
+
+    stadium.scale.set(scaleFactor, scaleFactor, scaleFactor);
     stadium.position.set(0, 0, 0);
     scene.add(stadium);
   });
@@ -146,15 +156,21 @@ function init3D() {
   // Загрузка мяча
   loader.load('models/ball.glb', (gltf) => {
     ballMesh = gltf.scene;
-    ballMesh.scale.set(0.5, 0.5, 0.5); // Масштабируем мяч
-    ballMesh.position.set(0, 0.5, 0);
+
+    // Масштабируем мяч до реального размера (диаметр 0.22 метра)
+    const realBallDiameter = 0.22; // метры
+    // Предположим, что ваша модель мяча имеет диаметр ~1 единица в Three.js
+    const ballScale = realBallDiameter / 1;
+
+    ballMesh.scale.set(ballScale, ballScale, ballScale);
+    ballMesh.position.set(0, realBallDiameter/2, 0); // Позиция по Y = радиус
     scene.add(ballMesh);
 
     // Физическое тело мяча
     ballBody = new CANNON.Body({
-      mass: 0.45,
-      shape: new CANNON.Sphere(0.5), // радиус 0.5 метра
-      position: new CANNON.Vec3(0, 0.5, 0),
+      mass: 0.45, // кг
+      shape: new CANNON.Sphere(realBallDiameter/2), // радиус 0.11 метра
+      position: new CANNON.Vec3(0, realBallDiameter/2, 0),
       linearDamping: 0.01,
       angularDamping: 0.01,
     });
@@ -171,7 +187,14 @@ function init3D() {
 
     loader.load(data.model, (gltf) => {
       const player = gltf.scene;
-      player.scale.set(0.8, 0.8, 0.8); // Масштабируем игрока
+
+      // Масштабируем игрока до реальной высоты (~1.8 метра)
+      const realPlayerHeight = 1.8; // метры
+      // Предположим, что ваша модель игрока имеет высоту ~1.8 единиц в Three.js
+      // Если нет, вам нужно измерить высоту модели и масштабировать соответственно
+      const playerScale = realPlayerHeight / 1.8; // Примерный масштаб
+
+      player.scale.set(playerScale, playerScale, playerScale);
       player.position.set(pos.x, 0, pos.z);
       player.castShadow = true;
 
