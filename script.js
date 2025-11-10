@@ -25,34 +25,35 @@ let isExtraTime = false;
 let isPenaltyShootout = false;
 let attempts = 0;
 let points = 0;
+let playerBalance = 1000000; // Баланс игрока (в монетах)
 
 // Список игроков с их характеристиками и позициями
 const playerData = [
-  // Команда 1 (Домашняя)
-  { id: 'ronaldo', name: 'Cristiano Ronaldo', rating: 97, position: 'ST', pac: 93, sho: 99, pas: 90, dri: 94, def: 75, phy: 99, team: 'Al Nassr', nationality: 'Portugal', model: 'models/player1.glb' },
-  { id: 'messi', name: 'Lionel Messi', rating: 97, position: 'CAM', pac: 94, sho: 92, pas: 97, dri: 98, def: 80, phy: 87, team: 'Inter Miami', nationality: 'Argentina', model: 'models/player2.glb' },
-  { id: 'kane', name: 'Kane', rating: 98, position: 'CM', pac: 93, sho: 96, pas: 98, dri: 94, def: 92, phy: 93, team: 'Bayern Munich', nationality: 'England', model: 'models/player1.glb' },
-  { id: 'griezmann', name: 'Griezmann', rating: 98, position: 'CAM', pac: 92, sho: 94, pas: 97, dri: 98, def: 80, phy: 87, team: 'Atlético Madrid', nationality: 'France', model: 'models/player2.glb' },
-  { id: 'konate', name: 'Konaté', rating: 98, position: 'GK', pac: 98, sho: 97, pas: 95, dri: 94, def: 85, phy: 94, team: 'Liverpool', nationality: 'France', model: 'models/goalkeeper.glb' },
-  { id: 'rodri', name: 'Rodri', rating: 98, position: 'CB', pac: 93, sho: 80, pas: 96, dri: 93, def: 98, phy: 95, team: 'Man City', nationality: 'Spain', model: 'models/player1.glb' },
-  { id: 'mcTominay', name: 'McTominay', rating: 98, position: 'ST', pac: 93, sho: 99, pas: 90, dri: 94, def: 75, phy: 99, team: 'Man Utd', nationality: 'Scotland', model: 'models/player2.glb' },
-  { id: 'hansen', name: 'Hansen', rating: 97, position: 'RW', pac: 96, sho: 95, pas: 95, dri: 97, def: 58, phy: 86, team: 'Chelsea', nationality: 'Denmark', model: 'models/player1.glb' },
-  { id: 'viniJr', name: 'Vini Jr.', rating: 97, position: 'LW', pac: 99, sho: 91, pas: 90, dri: 98, def: 38, phy: 78, team: 'Real Madrid', nationality: 'Brazil', model: 'models/player2.glb' },
-  { id: 'salah', name: 'Salah', rating: 97, position: 'RW', pac: 97, sho: 95, pas: 92, dri: 97, def: 60, phy: 85, team: 'Liverpool', nationality: 'Egypt', model: 'models/player1.glb' },
-  { id: 'pelé', name: 'Pelé', rating: 97, position: 'CAM', pac: 95, sho: 97, pas: 93, dri: 96, def: 61, phy: 82, team: 'Santos', nationality: 'Brazil', model: 'models/player2.glb' },
+  // Команда 1 (домашняя)
+  { id: 'ronaldo', name: 'Cristiano Ronaldo', rating: 97, position: 'ST', pac: 93, sho: 99, pas: 90, dri: 94, def: 75, phy: 99, team: 'Al Nassr', nationality: 'Portugal', model: 'models/player1.glb', price: 1800000 },
+  { id: 'messi', name: 'Lionel Messi', rating: 97, position: 'CAM', pac: 94, sho: 92, pas: 97, dri: 98, def: 80, phy: 87, team: 'Inter Miami', nationality: 'Argentina', model: 'models/player2.glb', price: 1600000 },
+  { id: 'kane', name: 'Kane', rating: 98, position: 'CM', pac: 93, sho: 96, pas: 98, dri: 94, def: 92, phy: 93, team: 'Bayern Munich', nationality: 'England', model: 'models/player1.glb', price: 1900000 },
+  { id: 'griezmann', name: 'Griezmann', rating: 98, position: 'CAM', pac: 92, sho: 94, pas: 97, dri: 98, def: 80, phy: 87, team: 'Atlético Madrid', nationality: 'France', model: 'models/player2.glb', price: 1500000 },
+  { id: 'konate', name: 'Konaté', rating: 98, position: 'GK', pac: 98, sho: 97, pas: 95, dri: 94, def: 85, phy: 94, team: 'Liverpool', nationality: 'France', model: 'models/goalkeeper.glb', price: 400000 },
+  { id: 'rodri', name: 'Rodri', rating: 98, position: 'CB', pac: 93, sho: 80, pas: 96, dri: 93, def: 98, phy: 95, team: 'Man City', nationality: 'Spain', model: 'models/player1.glb', price: 1700000 },
+  { id: 'mcTominay', name: 'McTominay', rating: 98, position: 'ST', pac: 93, sho: 99, pas: 90, dri: 94, def: 75, phy: 99, team: 'Man Utd', nationality: 'Scotland', model: 'models/player2.glb', price: 300000 },
+  { id: 'hansen', name: 'Hansen', rating: 97, position: 'RW', pac: 96, sho: 95, pas: 95, dri: 97, def: 58, phy: 86, team: 'Chelsea', nationality: 'Denmark', model: 'models/player1.glb', price: 400000 },
+  { id: 'viniJr', name: 'Vini Jr.', rating: 97, position: 'LW', pac: 99, sho: 91, pas: 90, dri: 98, def: 38, phy: 78, team: 'Real Madrid', nationality: 'Brazil', model: 'models/player2.glb', price: 1200000 },
+  { id: 'salah', name: 'Salah', rating: 97, position: 'RW', pac: 97, sho: 95, pas: 92, dri: 97, def: 60, phy: 85, team: 'Liverpool', nationality: 'Egypt', model: 'models/player1.glb', price: 700000 },
+  { id: 'pelé', name: 'Pelé', rating: 97, position: 'CAM', pac: 95, sho: 97, pas: 93, dri: 96, def: 61, phy: 82, team: 'Santos', nationality: 'Brazil', model: 'models/player2.glb', price: 2300000 },
 
   // Команда 2 (Гостевая)
-  { id: 'mbappe', name: 'Mbappé', rating: 91, position: 'ST', pac: 97, sho: 90, pas: 80, dri: 92, def: 36, phy: 78, team: 'Real Madrid', nationality: 'France', model: 'models/player1.glb' },
-  { id: 'dembele', name: 'Dembélé', rating: 97, position: 'RW', pac: 99, sho: 90, pas: 94, dri: 97, def: 55, phy: 75, team: 'Barcelona', nationality: 'France', model: 'models/player2.glb' },
-  { id: 'cruyff', name: 'Cruyff', rating: 98, position: 'LM', pac: 96, sho: 92, pas: 98, dri: 99, def: 80, phy: 86, team: 'Ajax', nationality: 'Netherlands', model: 'models/player1.glb' },
-  { id: 'maradona', name: 'Maradona', rating: 98, position: 'RW', pac: 94, sho: 94, pas: 97, dri: 99, def: 45, phy: 85, team: 'Napoli', nationality: 'Argentina', model: 'models/player2.glb' },
-  { id: 'vanDijk', name: 'van Dijk', rating: 97, position: 'CB', pac: 89, sho: 68, pas: 81, dri: 80, def: 97, phy: 96, team: 'Liverpool', nationality: 'Netherlands', model: 'models/player1.glb' },
-  { id: 'tah', name: 'Tah', rating: 97, position: 'CB', pac: 90, sho: 70, pas: 83, dri: 85, def: 97, phy: 95, team: 'Bayer Leverkusen', nationality: 'Germany', model: 'models/player2.glb' },
-  { id: 'bastoni', name: 'Bastoni', rating: 97, position: 'CB', pac: 89, sho: 55, pas: 87, dri: 90, def: 97, phy: 96, team: 'Inter Milan', nationality: 'Italy', model: 'models/player1.glb' },
-  { id: 'osimhen', name: 'Osimhen', rating: 97, position: 'ST', pac: 97, sho: 97, pas: 81, dri: 93, def: 53, phy: 92, team: 'Napoli', nationality: 'Nigeria', model: 'models/player2.glb' },
-  { id: 'wilson', name: 'Wilson', rating: 97, position: 'ST', pac: 98, sho: 95, pas: 87, dri: 98, def: 54, phy: 93, team: 'Arsenal', nationality: 'England', model: 'models/player1.glb' },
-  { id: 'retgui', name: 'Retegui', rating: 97, position: 'ST', pac: 96, sho: 97, pas: 89, dri: 95, def: 60, phy: 94, team: 'Juventus', nationality: 'Italy', model: 'models/player2.glb' },
-  { id: 'shaw', name: 'Shaw', rating: 97, position: 'ST', pac: 94, sho: 97, pas: 86, dri: 93, def: 43, phy: 96, team: 'Man Utd', nationality: 'England', model: 'models/player1.glb' }
+  { id: 'mbappe', name: 'Mbappé', rating: 91, position: 'ST', pac: 97, sho: 90, pas: 80, dri: 92, def: 36, phy: 78, team: 'Real Madrid', nationality: 'France', model: 'models/player1.glb', price: 1300000 },
+  { id: 'dembele', name: 'Dembélé', rating: 97, position: 'RW', pac: 99, sho: 90, pas: 94, dri: 97, def: 55, phy: 75, team: 'Barcelona', nationality: 'France', model: 'models/player2.glb', price: 1300000 },
+  { id: 'cruyff', name: 'Cruyff', rating: 98, position: 'LM', pac: 96, sho: 92, pas: 98, dri: 99, def: 80, phy: 86, team: 'Ajax', nationality: 'Netherlands', model: 'models/player1.glb', price: 4200000 },
+  { id: 'maradona', name: 'Maradona', rating: 98, position: 'RW', pac: 94, sho: 94, pas: 97, dri: 99, def: 45, phy: 85, team: 'Napoli', nationality: 'Argentina', model: 'models/player2.glb', price: 2700000 },
+  { id: 'vanDijk', name: 'van Dijk', rating: 97, position: 'CB', pac: 89, sho: 68, pas: 81, dri: 80, def: 97, phy: 96, team: 'Liverpool', nationality: 'Netherlands', model: 'models/player1.glb', price: 1900000 },
+  { id: 'tah', name: 'Tah', rating: 97, position: 'CB', pac: 90, sho: 70, pas: 83, dri: 85, def: 97, phy: 95, team: 'Bayer Leverkusen', nationality: 'Germany', model: 'models/player2.glb', price: 270000 },
+  { id: 'bastoni', name: 'Bastoni', rating: 97, position: 'CB', pac: 89, sho: 55, pas: 87, dri: 90, def: 97, phy: 96, team: 'Inter Milan', nationality: 'Italy', model: 'models/player1.glb', price: 260000 },
+  { id: 'osimhen', name: 'Osimhen', rating: 97, position: 'ST', pac: 97, sho: 97, pas: 81, dri: 93, def: 53, phy: 92, team: 'Napoli', nationality: 'Nigeria', model: 'models/player2.glb', price: 280000 },
+  { id: 'wilson', name: 'Wilson', rating: 97, position: 'ST', pac: 98, sho: 95, pas: 87, dri: 98, def: 54, phy: 93, team: 'Arsenal', nationality: 'England', model: 'models/player1.glb', price: 390000 },
+  { id: 'retgui', name: 'Retegui', rating: 97, position: 'ST', pac: 96, sho: 97, pas: 89, dri: 95, def: 60, phy: 94, team: 'Juventus', nationality: 'Italy', model: 'models/player2.glb', price: 350000 },
+  { id: 'shaw', name: 'Shaw', rating: 97, position: 'ST', pac: 94, sho: 97, pas: 86, dri: 93, def: 43, phy: 96, team: 'Man Utd', nationality: 'England', model: 'models/player1.glb', price: 430000 }
 ];
 
 // Стартовые позиции игроков (в метрах, относительно центра поля)
@@ -84,6 +85,14 @@ const startingPositions = [
   { x: 0, z: 15 } // CAM
 ];
 
+// Управление WASD
+let keys = {
+  w: false,
+  a: false,
+  s: false,
+  d: false
+};
+
 // =================================
 // ИНИЦИАЛИЗАЦИЯ
 // =================================
@@ -98,9 +107,9 @@ function init3D() {
   scene = new THREE.Scene();
   scene.background = new THREE.Color(0x22aa22); // Зеленое поле
 
-  // Камера
+  // Камера от трибун
   camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-  camera.position.set(0, 15, 25);
+  camera.position.set(0, 30, 40); // Высота трибун
   camera.lookAt(0, 0, 0);
 
   // Рендерер
@@ -230,6 +239,15 @@ function init3D() {
 
       // Обновляем анимации
       if (mixer) mixer.update(delta);
+
+      // Управление WASD
+      if (currentControlledPlayer) {
+        let speed = 0.1;
+        if (keys.w) currentControlledPlayer.position.z -= speed;
+        if (keys.s) currentControlledPlayer.position.z += speed;
+        if (keys.a) currentControlledPlayer.position.x -= speed;
+        if (keys.d) currentControlledPlayer.position.x += speed;
+      }
     }
 
     renderer.render(scene, camera);
@@ -246,86 +264,116 @@ function init3D() {
 }
 
 function setupEventListeners() {
-    // Кнопки UI
-    document.getElementById('shootBtn').addEventListener('click', () => {
-        if (!isPlaying) return;
-        attempts++;
-        if (Math.random() > 0.3) { // 70% шанс
-            scoreGoal();
-        } else {
-            playWhistleSound(); // Промах
-        }
-        updateHUD();
+    // Клавиши WASD
+    window.addEventListener('keydown', (e) => {
+        if (e.key === 'w') keys.w = true;
+        if (e.key === 's') keys.s = true;
+        if (e.key === 'a') keys.a = true;
+        if (e.key === 'd') keys.d = true;
     });
 
-    document.getElementById('passBtn').addEventListener('click', () => {
-        console.log("Пас!");
-        if (mixer && actions['pass']) {
-            actions['pass'].reset().play();
-        }
+    window.addEventListener('keyup', (e) => {
+        if (e.key === 'w') keys.w = false;
+        if (e.key === 's') keys.s = false;
+        if (e.key === 'a') keys.a = false;
+        if (e.key === 'd') keys.d = false;
     });
 
-    document.getElementById('throughBtn').addEventListener('click', () => {
-        console.log("Проникающий пас!");
-    });
+    // Кнопки UI (создаем динамически)
+    createButtons();
 
-    document.getElementById('sprintBtn').addEventListener('click', () => {
-        console.log("Спринт!");
-        if (mixer && actions['sprint']) {
-            actions['sprint'].reset().play();
-        }
-    });
+    // Джойстик — убираем, так как управляем WASD
+    // document.getElementById('joystick').remove();
+}
 
-    // Джойстик
-    const joystick = document.getElementById('joystick');
-    let joystickCenter = { x: 0, y: 0 };
-    let stickPosition = { x: 0, y: 0 };
+function createButtons() {
+  // Создаем контейнер для кнопок
+  const buttonsContainer = document.createElement('div');
+  buttonsContainer.id = 'buttonsContainer';
+  buttonsContainer.style.position = 'absolute';
+  buttonsContainer.style.bottom = '20px';
+  buttonsContainer.style.right = '20px';
+  buttonsContainer.style.display = 'flex';
+  buttonsContainer.style.gap = '10px';
 
-    joystick.addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        const rect = joystick.getBoundingClientRect();
-        joystickCenter.x = rect.left + rect.width / 2;
-        joystickCenter.y = rect.top + rect.height / 2;
-        moveStick(e.touches[0]);
-    });
-
-    joystick.addEventListener('touchmove', (e) => {
-        e.preventDefault();
-        moveStick(e.touches[0]);
-    });
-
-    joystick.addEventListener('touchend', (e) => {
-        e.preventDefault();
-        const stick = document.querySelector('.stick');
-        stick.style.transform = 'translate(0, 0)';
-        stickPosition = { x: 0, y: 0 };
-    });
-
-    function moveStick(touch) {
-        const stick = document.querySelector('.stick');
-        const deltaX = touch.clientX - joystickCenter.x;
-        const deltaY = touch.clientY - joystickCenter.y;
-        const maxDistance = 30;
-
-        const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-        if (distance > maxDistance) {
-            const angle = Math.atan2(deltaY, deltaX);
-            stickPosition.x = Math.cos(angle) * maxDistance;
-            stickPosition.y = Math.sin(angle) * maxDistance;
-        } else {
-            stickPosition.x = deltaX;
-            stickPosition.y = deltaY;
-        }
-
-        stick.style.transform = `translate(${stickPosition.x}px, ${stickPosition.y}px)`;
-
-        // Перемещение игрока
-        if (currentControlledPlayer) {
-            currentControlledPlayer.position.x += stickPosition.x * 0.01;
-            currentControlledPlayer.position.z -= stickPosition.y * 0.01;
-            // Также перемещаем физическое тело игрока, если оно есть
-        }
+  // Кнопка "Удар"
+  const shootBtn = createButton('SHOOT', 'https://cdn2.futbin.com/https%3A%2F%2Fcdn.futbin.com%2Fdesign%2Fimg%2Fcoins_big.png?fm=png&ixlib=java-2.1.0&w=20&s=723885ca3b3ab1cf3cb11c53f9408968');
+  shootBtn.onclick = () => {
+    if (!isPlaying) return;
+    attempts++;
+    if (Math.random() > 0.3) { // 70% шанс
+      scoreGoal();
+    } else {
+      playWhistleSound(); // Промах
     }
+    updateHUD();
+  };
+
+  // Кнопка "Пас"
+  const passBtn = createButton('PASS', 'https://www.futbin.com/design2/img/static/filters/foot-right.svg');
+  passBtn.onclick = () => {
+    console.log("Пас!");
+    if (mixer && actions['pass']) {
+      actions['pass'].reset().play();
+    }
+  };
+
+  // Кнопка "Проникающий пас"
+  const throughBtn = createButton('THROUGH', 'https://www.futbin.com/design2/img/static/filters/foot-left.svg');
+  throughBtn.onclick = () => {
+    console.log("Проникающий пас!");
+  };
+
+  // Кнопка "Спринт и навык"
+  const sprintBtn = createButton('SPRINT & SKILL', 'https://assets.mixkit.co/sfx/preview/mixkit-quick-jump-arcade-game-effect-271.mp3');
+  sprintBtn.onclick = () => {
+    console.log("Спринт!");
+    if (mixer && actions['sprint']) {
+      actions['sprint'].reset().play();
+    }
+  };
+
+  buttonsContainer.appendChild(shootBtn);
+  buttonsContainer.appendChild(passBtn);
+  buttonsContainer.appendChild(throughBtn);
+  buttonsContainer.appendChild(sprintBtn);
+
+  document.body.appendChild(buttonsContainer);
+}
+
+function createButton(text, iconUrl) {
+  const btn = document.createElement('button');
+  btn.style.padding = '10px 20px';
+  btn.style.fontSize = '1em';
+  btn.style.backgroundColor = 'rgba(255,255,255,0.2)';
+  btn.style.border = '2px solid rgba(255,255,255,0.3)';
+  btn.style.borderRadius = '10px';
+  btn.style.cursor = 'pointer';
+  btn.style.transition = 'background 0.2s';
+  btn.style.display = 'flex';
+  btn.style.alignItems = 'center';
+  btn.style.gap = '5px';
+  btn.style.fontWeight = 'bold';
+
+  btn.onmouseover = () => {
+    btn.style.backgroundColor = 'rgba(255,255,255,0.3)';
+  };
+
+  btn.onmouseout = () => {
+    btn.style.backgroundColor = 'rgba(255,255,255,0.2)';
+  };
+
+  const icon = document.createElement('img');
+  icon.src = iconUrl;
+  icon.style.width = '20px';
+  icon.style.height = '20px';
+
+  const textNode = document.createTextNode(text);
+
+  btn.appendChild(icon);
+  btn.appendChild(textNode);
+
+  return btn;
 }
 
 // =================================
@@ -347,7 +395,9 @@ function showClub() {
 }
 
 function showMarket() {
-  alert("Магазин пока не реализован!");
+  document.getElementById('homeScreen').classList.remove('active');
+  document.getElementById('marketScreen').classList.add('active');
+  loadMarket();
 }
 
 function resetGame() {
@@ -368,6 +418,7 @@ function updateHUD() {
   document.getElementById('time').textContent = isExtraTime ? `${extraTime}'` : `${matchTime}'`;
   document.getElementById('attempts').textContent = `${attempts}/99`;
   document.getElementById('points').textContent = points;
+  document.getElementById('balance').textContent = playerBalance;
 }
 
 function startMatch() {
@@ -508,6 +559,68 @@ function loadPlayerCards() {
     }
 
     container.appendChild(card);
+  }
+}
+
+// =================================
+// РЫНОК
+// =================================
+
+function loadMarket() {
+  const container = document.querySelector('.market-container');
+  container.innerHTML = '';
+
+  for (const data of playerData) {
+    const marketCard = document.createElement('div');
+    marketCard.className = 'market-card';
+
+    // Изображение игрока
+    const img = document.createElement('img');
+    let futbinId = 'p184758707'; // Роналду по умолчанию
+    if (data.id === 'griezmann') futbinId = 'p151189709';
+    if (data.id === 'konate') futbinId = 'p84123758';
+    if (data.id === 'kane') futbinId = 'p201528718';
+    if (data.id === 'messi') futbinId = 'p134470099';
+    if (data.id === 'mbappe') futbinId = 'p151233738'; // Mbappé
+    if (data.id === 'salah') futbinId = 'p184758707'; // Salah
+    if (data.id === 'vanDijk') futbinId = 'p117643888'; // van Dijk
+
+    img.src = `https://cdn3.futbin.com/content/fifa25/img/players/${futbinId}.png?fm=png&ixlib=java-2.1.0&verzion=1&w=100&s=12345`;
+    img.alt = data.name;
+    img.onerror = function() { this.src = 'images/cards/generic_player.png'; };
+
+    const name = document.createElement('div');
+    name.className = 'market-player-name';
+    name.textContent = data.name;
+
+    const rating = document.createElement('div');
+    rating.className = 'market-player-rating';
+    rating.textContent = data.rating;
+
+    const price = document.createElement('div');
+    price.className = 'market-player-price';
+    price.textContent = `${data.price} coins`;
+
+    const buyBtn = document.createElement('button');
+    buyBtn.className = 'buy-btn';
+    buyBtn.textContent = 'Купить';
+    buyBtn.onclick = () => {
+      if (playerBalance >= data.price) {
+        playerBalance -= data.price;
+        alert(`Вы купили ${data.name} за ${data.price} монет!`);
+        updateHUD();
+      } else {
+        alert(`Недостаточно средств! Нужно ${data.price}, у вас ${playerBalance}`);
+      }
+    };
+
+    marketCard.appendChild(img);
+    marketCard.appendChild(name);
+    marketCard.appendChild(rating);
+    marketCard.appendChild(price);
+    marketCard.appendChild(buyBtn);
+
+    container.appendChild(marketCard);
   }
 }
 
